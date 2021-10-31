@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80015
 File Encoding         : 65001
 
-Date: 2021-10-21 01:33:59
+Date: 2021-10-31 22:39:39
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -28,7 +28,9 @@ CREATE TABLE `blog_detail` (
   `blog_likes` int(20) DEFAULT NULL,
   `blog_dislikes` int(20) DEFAULT NULL,
   `blog_replynumber` int(100) DEFAULT NULL,
-  PRIMARY KEY (`blog_id`)
+  PRIMARY KEY (`blog_id`),
+  KEY `user_id3` (`user_id`),
+  CONSTRAINT `user_id3` FOREIGN KEY (`user_id`) REFERENCES `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
@@ -75,8 +77,12 @@ CREATE TABLE `donate_brief` (
   `coll_name` varchar(255) NOT NULL,
   `coll_content` varchar(255) NOT NULL,
   `coll_time` datetime NOT NULL ON UPDATE CURRENT_TIMESTAMP,
-  `coll_companynumber` int(100) NOT NULL,
-  PRIMARY KEY (`coll_id`)
+  `coll_companyid` int(100) NOT NULL,
+  `user_id` int(20) NOT NULL,
+  PRIMARY KEY (`coll_id`),
+  KEY `coll_companyid` (`coll_companyid`),
+  KEY `user_id4` (`user_id`),
+  CONSTRAINT `user_id4` FOREIGN KEY (`user_id`) REFERENCES `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
@@ -91,7 +97,8 @@ CREATE TABLE `donate_detail` (
   `coll_companyid` int(100) NOT NULL,
   `coll_companyname` varchar(255) NOT NULL,
   `coll_company_details` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`coll_companyid`)
+  PRIMARY KEY (`coll_companyid`),
+  CONSTRAINT `coll_companyid` FOREIGN KEY (`coll_companyid`) REFERENCES `donate_brief` (`coll_companyid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
@@ -106,7 +113,10 @@ CREATE TABLE `elearn_elearn` (
   `elearn_id` int(100) NOT NULL,
   `elearn_title` varchar(255) NOT NULL,
   `elearn_content` varchar(255) NOT NULL,
-  PRIMARY KEY (`elearn_id`)
+  `user_id` int(100) NOT NULL,
+  PRIMARY KEY (`elearn_id`),
+  KEY `user_id6` (`user_id`),
+  CONSTRAINT `user_id6` FOREIGN KEY (`user_id`) REFERENCES `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
@@ -139,7 +149,10 @@ CREATE TABLE `product_product` (
   `product_details` varchar(255) NOT NULL,
   `product_price` int(200) NOT NULL,
   `product_number` int(200) NOT NULL,
-  PRIMARY KEY (`product_id`)
+  `user_id` int(100) NOT NULL,
+  PRIMARY KEY (`product_id`),
+  KEY `user_id5` (`user_id`),
+  CONSTRAINT `user_id5` FOREIGN KEY (`user_id`) REFERENCES `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
@@ -230,7 +243,8 @@ CREATE TABLE `user_permission` (
   `name` varchar(255) NOT NULL,
   `content_type_id` int(20) NOT NULL,
   `code_name` varchar(255) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  CONSTRAINT `id` FOREIGN KEY (`id`) REFERENCES `user_id` (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
